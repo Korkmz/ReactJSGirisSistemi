@@ -20,26 +20,31 @@ class App extends Component{
         let tekrarSifre=document.getElementById("sifreTekrarReg").value;
         console.log(sifre+" "+tekrarSifre);
 
-        if (sifre === tekrarSifre){
-            const newKisi={
-                kisiEmail:email1,
-                kisiSifre:sifre,
-            };
+        if (email1 != '' || email1 != null){
+            if (sifre === tekrarSifre){
+                const newKisi={
+                    kisiEmail:email1,
+                    kisiSifre:sifre,
+                };
 
-            const updateItem=[...this.state.kisiler,newKisi];
-            this.setState({
-                kisiler:updateItem,
-                secimNo:true,
-                kisiEmail:'',
-                kisiSifre:'',
-                hataMesaji:false,
-                hataMesaji2:false,});
-        }else{
-            this.setState({
-                hataMesaji:true
-            })
+                const updateItem=[...this.state.kisiler,newKisi];
+                this.setState({
+                    kisiler:updateItem,
+                    secimNo:true,
+                    kisiEmail:'',
+                    kisiSifre:'',
+                    hataMesaji:false,
+                    hataMesaji2:false,});
+            }else{
+                this.setState({
+                    hataMesaji:true
+                })
+            }
+        } else{
+
         }
-    }
+
+    };
     onLogin =(e)=>{
         e.preventDefault();
         let email=document.getElementById("emailLogin").value;
@@ -54,7 +59,6 @@ class App extends Component{
 
         } else{
             if (email ===filterId.kisiEmail && sifre ===filterId.kisiSifre) {
-
                 this.setState({
                     hataMesaji2:false,
                 });
@@ -80,7 +84,14 @@ class App extends Component{
 
             <div className={"container"}>
                 <TodoStwitch secim={this.secim} secimNo={this.state.secimNo}/>
-                {this.state.secimNo ? <TodoLogin onLogin={this.onLogin} hataMesaji={this.state.hataMesaji2}/>:<TodoRegister onRegister={this.onRegister} hataMesaji={this.state.hataMesaji}/> }
+                {this.state.secimNo ?
+                    <TodoLogin
+                        onLogin={this.onLogin}
+                        hataMesaji={this.state.hataMesaji2}/>
+                    :
+                    <TodoRegister
+                        onRegister={this.onRegister}
+                        hataMesaji={this.state.hataMesaji}/> }
             </div>
         );
     }
